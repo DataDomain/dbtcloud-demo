@@ -40,7 +40,7 @@ with stg_customer as (
         dim."CUSTOMER_ACCOUNT_BALANCE",
         dim."CUSTOMER_MKT_SEGMENT",
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT,
-        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_VALID_FROM,
+        dim.DW_VALID_FROM,
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', TIMESTAMPADD( second, -1, CURRENT_TIMESTAMP())) DW_VALID_TO,
         'N' DW_CURRENT_FLAG
     from 
@@ -63,7 +63,7 @@ with stg_customer as (
         stg."CUSTOMER_MKT_SEGMENT",
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT,
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_VALID_FROM,
-        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', TIMESTAMPADD(second, -1, TO_TIMESTAMP('31/12/2050','DD/MM/YYYY'))) DW_VALID_TO,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', TO_TIMESTAMP('31/12/2050','DD/MM/YYYY')) DW_VALID_TO,
         'Y' DW_CURRENT_FLAG
     from 
         stg_customer stg
@@ -87,7 +87,7 @@ with stg_customer as (
         "CUSTOMER_MKT_SEGMENT",
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT,
         CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_VALID_FROM,
-        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', TIMESTAMPADD(second, -1, TO_TIMESTAMP('31/12/2050','DD/MM/YYYY'))) DW_VALID_TO,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', TO_TIMESTAMP('31/12/2050','DD/MM/YYYY')) DW_VALID_TO,
         'Y' DW_CURRENT_FLAG
     from 
         stg_customer stg

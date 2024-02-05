@@ -9,7 +9,7 @@ source as (
 renamed as (
 
     select
-        l_orderkey      item_id,
+        l_orderkey      item_order_id,
         l_partkey       part_id,
         l_suppkey       supplier_id,
         l_linenumber    item_num,
