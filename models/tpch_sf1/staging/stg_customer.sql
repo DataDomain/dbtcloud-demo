@@ -18,7 +18,8 @@ renamed as (
         c_phone         customer_phone,
         c_acctbal       customer_account_balance,
         c_mktsegment    customer_mkt_segment,
-        c_comment       customer_comment
+        c_comment       customer_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 

@@ -17,7 +17,8 @@ renamed as (
         p_size          part_size,
         p_container     part_container,
         p_retailprice   part_price,
-        p_comment       part_comment
+        p_comment       part_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 

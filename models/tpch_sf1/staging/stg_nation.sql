@@ -12,7 +12,8 @@ renamed as (
         n_nationkey     country_id,
         n_name          country_name,
         n_regionkey     country_region_id,
-        n_comment       country_comment
+        n_comment       country_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 

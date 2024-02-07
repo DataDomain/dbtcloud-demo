@@ -17,7 +17,8 @@ renamed as (
         o_orderpriority     order_priority,
         o_clerk             order_clerk,
         o_shippriority      order_ship_priority,
-        o_comment           order_comment
+        o_comment           order_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 

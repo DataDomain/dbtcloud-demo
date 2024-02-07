@@ -15,7 +15,8 @@ renamed as (
         s_nationkey     supplier_country_id,
         s_phone         supplier_phone,
         s_acctbal       supplier_account_balance,
-        s_comment       supplier_comment
+        s_comment       supplier_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 

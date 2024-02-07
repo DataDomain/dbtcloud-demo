@@ -24,7 +24,8 @@ renamed as (
         l_receiptdate   item_receipt_date,
         l_shipinstruct  item_ship_instructions,
         l_shipmode      item_ship_mode,
-        l_comment       item_comment
+        l_comment       item_comment,
+        CONVERT_TIMEZONE('{{ var('DW_TIMEZONE') }}', CURRENT_TIMESTAMP()) DW_PROCESS_DT
 
     from source
 
