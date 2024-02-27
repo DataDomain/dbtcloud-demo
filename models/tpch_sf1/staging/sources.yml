@@ -1,6 +1,6 @@
 sources:
   - name: tpch_sf1
-    database: snowflake_sample_data
+    database: quixotic-prism-414809
     schema: tpch_sf1
     tables:
       - name: customer

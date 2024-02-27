@@ -3,7 +3,7 @@ with
 source as (
 
     select * from {{ source('tpch_sf1', 'supplier') }}
-
+ 
 ),
 
 renamed as (
