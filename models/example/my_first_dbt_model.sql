@@ -11,9 +11,7 @@
 
 with source_data as (
 
-    select 1 as id
-    union all
-    select null as id
+    select * from DATADOMAIN_TIMESHEETS_WFM_EXTRACT
 
 )
 
