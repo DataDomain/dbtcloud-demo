@@ -11,7 +11,7 @@
 
 with source_data as (
 
-    select * from DATADOMAIN_TIMESHEETS_WFM_EXTRACT
+    select * from RAW.DATADOMAIN_TIMESHEETS_WFM_EXTRACT
 
 )
 
