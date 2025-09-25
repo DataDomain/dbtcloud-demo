@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: SF_source
+    schema: raw
+    tables:
+      - name: DATADOMAIN_TIMESHEETS_WFM_EXTRACT
+      - name: DD_FORECAST_FY_2025

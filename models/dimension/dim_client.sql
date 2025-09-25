@@ -1,26 +1,24 @@
 {{ config( 
     materialized = 'incremental', 
-    unique_key = 'consultant_name',
+    unique_key = 'client_name',
     incremental_strategy = 'merge'
 ) }}
 
 WITH base AS (
 
     SELECT
-        consultant_name,
-        contractor_flag,
+        client_name,
         CURRENT_TIMESTAMP() AS create_dt
-    FROM {{ ref('stg_consultant') }}
+    FROM {{ ref('stg_client') }}
 ),
 
 final AS (
 
     SELECT
         --Key
-        ROW_NUMBER() OVER (ORDER BY consultant_name) AS consultant_key,
+        ROW_NUMBER() OVER (ORDER BY client_name) AS client_key,
         -- Natural key and attributes
-        consultant_name,
-        contractor_flag,
+        client_name,
         create_dt
     FROM base
 )
@@ -28,5 +26,5 @@ final AS (
 SELECT * FROM final
 
 {% if is_incremental() %}
-WHERE consultant_name NOT IN (SELECT consultant_name FROM {{ this }})
+WHERE client_name NOT IN (SELECT client_name FROM {{ this }})
 {% endif %}

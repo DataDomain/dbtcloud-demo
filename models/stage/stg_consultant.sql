@@ -1,7 +1,7 @@
 WITH consultants AS (
     
     SELECT DISTINCT staff_name AS consultant_name
-    FROM RAW.DATADOMAIN_TIMESHEETS_WFM_EXTRACT
+    FROM {{ source( "SF_source", 'DATADOMAIN_TIMESHEETS_WFM_EXTRACT' )}}
 
 ),
 
