@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Date dimension table generated using dbt_utils.date_spine"
+    columns:
+      - name: date_day
+        description: "The actual date"
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_consultant
+    description: "Consultant information sourced from WFM timesheet"
+    columns:
+      - name: consultant_name
+        description: "The conultant full name"
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_client
+    description: "Client information sourced from WFM timesheet"
+    columns:
+      - name: client_name
+        description: "The client business name"
+        tests:
+          - not_null
+          - unique

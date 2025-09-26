@@ -38,9 +38,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   DD_forecast_tool:
     # Applies to all files under models/example/
-    dimension:
+    marts:
       +materialized: table
-    stage:
+    staging:
       +materialized: table
     example:
       +materialized: view
