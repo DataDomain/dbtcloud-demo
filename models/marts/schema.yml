@@ -27,3 +27,12 @@ models:
         tests:
           - not_null
           - unique
+  
+  - name: dim_project
+    description: "Project information sourced from WFM timesheet"
+    columns:
+      - name: project_no
+        description: "Unique project number assigned to the project"
+        tests:
+          - not_null
+          - unique
