@@ -2,6 +2,7 @@ WITH projects AS (
     
     SELECT DISTINCT 
         job_name AS project_name,
+        job_client AS client_name,
         job_milestones AS project_milestones,
         job_milestones_completed AS project_milestones_completed,
         job_no AS project_no,
@@ -19,6 +20,7 @@ final AS (
 
     SELECT 
         project_name,
+        client_name,
         project_no,
         project_manager,
         project_category,

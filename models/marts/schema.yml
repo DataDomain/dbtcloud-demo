@@ -13,8 +13,14 @@ models:
   - name: dim_consultant
     description: "Consultant information sourced from WFM timesheet"
     columns:
+      - name: consultant_key
+        description: "Primary key for the consultant dimension"
+        tests:
+          - not_null
+          - unique  
+
       - name: consultant_name
-        description: "The conultant full name"
+        description: "The conultant full name, natural key"
         tests:
           - not_null
           - unique
@@ -22,8 +28,14 @@ models:
   - name: dim_client
     description: "Client information sourced from WFM timesheet"
     columns:
+      - name: client_key
+        description: "Primary key for the client dimension"
+        tests:
+          - not_null
+          - unique   
+
       - name: client_name
-        description: "The client business name"
+        description: "The client business name, natural key"
         tests:
           - not_null
           - unique
@@ -31,8 +43,64 @@ models:
   - name: dim_project
     description: "Project information sourced from WFM timesheet"
     columns:
-      - name: project_no
-        description: "Unique project number assigned to the project"
+      - name: project_key
+        description: "Primary key for the project dimension"
         tests:
           - not_null
           - unique
+
+      - name: project_no
+        description: "Unique project number assigned to the project, natural key"
+        tests:
+          - not_null
+          - unique
+
+      - name: client_key
+        description: "Foreign key to the client dimension"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_client')
+                field: client_key
+
+  - name: dim_task
+    description: "Task information sourced from WFM timesheet"
+    columns:
+      - name: task_key
+        description: "Primary key for the task dimension - built from composite key project_no, task_label, task_category"
+        tests:
+          - not_null
+          - unique
+
+      - name: project_no
+        description: "Unique project number assigned to the project, part of the composite key for the task dimension"
+        tests:
+          - not_null
+
+      - name: task_label
+        description: "Label describing the task, part of the composite key for the task dimension"
+        tests:
+          - not_null
+
+      - name: task_category
+        description: "Category the task falls under, part of the composite key for the task dimension"
+        tests:
+          - not_null
+      
+      - name: project_key
+        description: "Foreign key to the project dimension"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_project')
+                field: project_key
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - project_no
+              - task_label
+              - task_category
