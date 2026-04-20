@@ -40,5 +40,15 @@ models:
     # Applies to all files under models/example/
     marts:
       +materialized: table
+      +transient: false
+      +schema: mart
     staging:
-      +materialized: table
+      +materialized: view
+      +schema: stg
+    intermediate:
+      +materialized: view
+      +schema: int
+
+vars:
+  'dbt_date:time_zone': 'Pacific/Auckland'
+    

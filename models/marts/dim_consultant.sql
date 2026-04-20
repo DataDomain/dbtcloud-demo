@@ -11,13 +11,27 @@ WITH base AS (
         contractor_flag,
         CURRENT_TIMESTAMP() AS create_dt
     FROM {{ ref('stg_consultant') }}
+
+    {% if is_incremental() %}
+    where consultant_name not in (
+        select consultant_name from {{ this }}
+    )
+    {% endif %}
+),
+
+unknown as (
+    select
+        {{ dbt_utils.generate_surrogate_key(['-1']) }} as consultant_key,
+        'Unknown' as consultant_name,
+        null as contractor_flag,
+        '1900-01-01' AS created_dt
 ),
 
 final AS (
 
     SELECT
         --Key
-        ROW_NUMBER() OVER (ORDER BY consultant_name) AS consultant_key,
+        {{ dbt_utils.generate_surrogate_key(['consultant_name']) }} as consultant_key,
         -- Natural key and attributes
         consultant_name,
         contractor_flag,
@@ -26,7 +40,5 @@ final AS (
 )
 
 SELECT * FROM final
-
-{% if is_incremental() %}
-WHERE consultant_name NOT IN (SELECT consultant_name FROM {{ this }})
-{% endif %}
+UNION
+select * from unknown

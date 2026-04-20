@@ -19,14 +19,43 @@ WITH base AS (
     
 ),
 
+unknown as (
+    SELECT
+        {{ dbt_utils.generate_surrogate_key(['-1']) }} as task_key,
+        'Unknown' as project_no,
+        'Unknown' as task_label,
+        'Unknown' as task_category,
+        null as task_billable,
+        null as task_remaining_time,
+        null as task_actual_time,
+        null as task_estimated_time,
+        '1900-01-01' as create_dt
+),
+
+unknown_join as (
+    SELECT
+        u.task_key,
+        p.project_key,
+        u.task_label,
+        u.task_category,
+        u.task_billable,
+        u.task_remaining_time,
+        u.task_actual_time,
+        u.task_estimated_time,
+        u.create_dt
+    from unknown u 
+    LEFT JOIN {{ ref("dim_project") }} p
+        ON UPPER(u.project_no) = UPPER(p.project_no)
+
+),
+
 final AS (
 
     SELECT
         --Key
-        ROW_NUMBER() OVER (ORDER BY base.project_no, task_label, task_category) AS task_key,
+        {{ dbt_utils.generate_surrogate_key(['task_label','task_category','p.project_key']) }} as task_key,
         p.project_key,
         -- Natural key and attributes
-        base.project_no,
         task_label,
         task_category,
         task_billable,
@@ -60,3 +89,5 @@ new_record AS (
 )
 
 select * from new_record
+union
+select * from unknown_join

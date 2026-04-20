@@ -73,11 +73,6 @@ models:
           - not_null
           - unique
 
-      - name: project_no
-        description: "Unique project number assigned to the project, part of the composite key for the task dimension"
-        tests:
-          - not_null
-
       - name: task_label
         description: "Label describing the task, part of the composite key for the task dimension"
         tests:
@@ -101,6 +96,6 @@ models:
       - dbt_utils.unique_combination_of_columns:
           arguments:
             combination_of_columns:
-              - project_no
+              - project_key
               - task_label
               - task_category
